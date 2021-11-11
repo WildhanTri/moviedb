@@ -1,8 +1,9 @@
-import { SET_SEARCH_HEADER } from "./actions"
+import { SET_SEARCH_HEADER, SET_SEARCH_RESULT } from "./actions"
 
 
 const initialState = {
-    searchInputHeader: ''
+    searchInputHeader: '',
+    searchMoviesResult: [],
 }
 
 const AppReducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 searchInputHeader: action.payload
+            }
+        case SET_SEARCH_RESULT:
+            return {
+                ...state,
+                searchMoviesResult: action.payload
             }
         default:
             return state

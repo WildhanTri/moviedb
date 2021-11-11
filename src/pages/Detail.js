@@ -6,9 +6,12 @@ import imdbLogo from '../assets/imdb-logo.svg';
 import metacriticLogo from '../assets/metacritic-logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { SET_SEARCH_RESULT } from "../stores/actions";
 
 const Detail = (props) => {
 
+  const dispatch = useDispatch()
 
   let { imdbID } = useParams();
   const [movie, setMovie] = useState({});
@@ -18,6 +21,11 @@ const Detail = (props) => {
 
   const movieService = new MovieService();
   useEffect(() => {
+    dispatch({
+      type: SET_SEARCH_RESULT,
+      payload: []
+    })
+
     setIsMovieLoading(true)
     movieService.getMoviesDetail(imdbID)
       .then((resolve) => {
@@ -28,7 +36,7 @@ const Detail = (props) => {
         setMovieError(error);
         setIsMovieLoading(false);
       })
-  }, [])
+  }, [imdbID])
 
   const ratingColor = (value, max) => {
     var percentage = (value * 100) / max;

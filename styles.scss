@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+$primary-color: #60c050;
+$secondary-color: #60c050;
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+a {
+    color: #60c050;
+}
+.nav-link {
+    color: #60c050;
+}
+
+.btn {
+    font-weight: 600;
+    padding: 4px 24px;
+    // box-shadow: 0 0 8px 0 rgba(17,22,26,.16), 0 4px 8px 0 rgba(17,22,26,.08), 0 8px 16px 0 rgba(17,22,26,.08);
+}
+
+.btn:focus {
+    box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.btn.with-shadow {
+    box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16), 0 4px 8px 0 rgba(17, 22, 26, 0.08),
+        0 8px 16px 0 rgba(17, 22, 26, 0.08);
+}
+
+.btn.with-shadow:focus {
+    box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.btn-primary {
+    background: $primary-color;
+    border: 1px solid $primary-color;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:disabled,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    background: darken($primary-color, 5%);
+    border: 1px solid $primary-color;
+}
+
+.btn-outline-primary {
+    color: $primary-color;
+    background: white;
+    border: 1px solid $primary-color;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:disabled,
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.btn-outline-primary:not(:disabled):not(.disabled):active {
+    background: darken(white, 5%);
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    outline: none;
+}
+
+.btn-link-active.btn-primary {
+    background: none;
+    border: none;
+    color: $primary-color;
+}
+
+.btn-secondary {
+    background: $secondary-color;
+    border: 1px solid $secondary-color;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active {
+    background: darken($secondary-color, 5%);
+    border: 1px solid $secondary-color;
+}
+
+.text-primary {
+    color: $primary-color !important;
+}
+
+.table.table-soccerpedia {
+    border-radius: 30px;
+    background: white;
+    box-shadow: 0px 28px 140px rgba(0, 0, 0, 0.07), 0px 6.25417px 31.2708px rgba(0, 0, 0, 0.0417275),
+        0px 1.86203px 9.31014px rgba(0, 0, 0, 0.0282725);
+}
+.table.table-soccerpedia .table-head tr {
+    background-color: $primary-color;
+    color: white;
+    border: 0px;
+}
+.table.table-soccerpedia .table-head tr > th:first-child {
+    background: $primary-color;
+    border-radius: 48px 0px 0px 48px;
+    text-align: center;
+}
+.table.table-soccerpedia .table-head tr > th:last-child {
+    background: $primary-color;
+    border-radius: 0px 48px 48px 0px;
+}
+
+.table.table-soccerpedia .table-body {
+    border-top: 0px solid transparent;
+    margin-top: 24px;
+}
+.table.table-soccerpedia .table-body:before {
+    content: "@";
+    display: block;
+    line-height: 10px;
+    text-indent: -99999px;
+}
+.table.table-soccerpedia .table-body tr > td:first-child {
+    text-align: center;
+}
+.table.table-soccerpedia .table-body tr > td:last-child {
+    padding-right: 48px;
+}
+.table.table-soccerpedia .table-body tr td {
+    border: 0px;
+}
+
+.table-fix-head {
+    overflow-y: auto !important;
+    height: 550px !important;
+}
+
+.table-fix-head table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+}
+
+.table-fix-head th,
+.table-fix-head td {
+    padding: 8px 16px !important;
+}
+
+.table-fix-head th {
+    position: sticky !important;
+    top: 0 !important;
+    background: $primary-color;
+}
+
+/* THINEST SCROLL BAR */
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: #f5f5f5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: darken($primary-color, 5%);
+    border: 1px solid darken($primary-color, 5%);
+}
+
+.pagination .page-item .page-link {
+    color: $primary-color;
+    background: white;
+}
+.pagination .page-item.active .page-link {
+    color: white;
+    border-color: $primary-color;
+    background: $primary-color;
+}

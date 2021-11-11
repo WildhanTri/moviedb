@@ -30,4 +30,21 @@ export default class MovieService extends React.Component {
                 )
         })
     }
+
+    getMoviesDetail = (imdbID) => {
+        return new Promise((resolve, reject) => {
+            var url = process.env.REACT_APP_OMDBAPI_API_ENDPOINT + "?apikey=" + process.env.REACT_APP_OMDBAPI_API_TOKEN + "&i=" + imdbID;
+
+            axios.get(url, {})
+                .then(
+                    (response) => {
+                        resolve(response.data)
+                    }
+                ).catch(
+                    (error) => {
+                        reject(error)
+                    }
+                )
+        })
+    }
 }

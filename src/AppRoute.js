@@ -8,6 +8,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom"
+import Detail from "./pages/Detail";
 
 const AppRoute = () => {
 
@@ -27,6 +28,9 @@ const AppRoute = () => {
             />
             <Route exact path="/home">
               <Home />
+            </Route>
+            <Route exact path="/home/:imdbID">
+              <Detail />
             </Route>
           </Switch>
         </div>

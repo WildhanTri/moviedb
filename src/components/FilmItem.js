@@ -27,7 +27,8 @@ const styles = {
         position: 'absolute',
         bottom: 0,
         color: 'white',
-        width: '100%'
+        width: '100%',
+        zIndex: 2
     },
     shadow: {
         position: 'absolute',
@@ -36,7 +37,8 @@ const styles = {
         boxShadow: '#1a1a1a 0px -100px 100px 10px inset',
         top: 0,
         left: 0,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        zIndex: 1
     },
     thumbnail: {
         width: '100%',

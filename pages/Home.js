@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import MovieService from "../services/MovieService";
 
 const Home = () => {
 
@@ -8,7 +7,7 @@ const Home = () => {
 
     return (
         <div style={styles.container}>
-            This is content
+            
         </div>
     )
 }

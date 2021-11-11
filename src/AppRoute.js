@@ -14,20 +14,22 @@ const AppRoute = () => {
   return (
     <Router>
       <Header />
-      <div style={{ paddingTop: '64px', paddingBottom: '64px', background: '#0f0f0f', minHeight: '100vh' }}>
-        <ScrollToTop />
-        <Switch>
-          <Route exact path="/"
-            render={() => {
-              return (
-                <Redirect to="/home" />
-              )
-            }}
-          />
-          <Route exact path="/home">
-            <Home />
-          </Route>
-        </Switch>
+      <div style={{ paddingTop: '128px', paddingBottom: '64px', background: '#0f0f0f', minHeight: '100vh' }}>
+        <div className="container">
+          <ScrollToTop />
+          <Switch>
+            <Route exact path="/"
+              render={() => {
+                return (
+                  <Redirect to="/home" />
+                )
+              }}
+            />
+            <Route exact path="/home">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </Router >
   )

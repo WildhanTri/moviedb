@@ -1,27 +1,42 @@
 import React, { useEffect } from "react";
 import MovieService from "../services/MovieService";
+import FilmItem from "../components/FilmItem";
 
 const Home = () => {
 
     const movieService = new MovieService();
     useEffect(() => {
-        
+        loadData();
     }, [])
 
+    const [movies, setMovies] = React.useState([]);
     const loadData = () => {
+        movieService.getMovies("Batman", null, null, null)
+            .then((resolve) => {
+                setMovies(resolve.Search);
+            })
+            .catch((error) => {
 
-        // movieService.getTeamDetail()
-        //     .then((resolve) => {
-        //         console.log(resolve.Search);
-        //     })
-        //     .catch((error) => {
-
-        //     })
+            })
     }
 
     return (
         <div style={styles.container}>
-            
+            <div className="row">
+                {
+                    movies.map((movie, index) => {
+                        return (
+                            <div className="col-6 col-md-4 col-lg-3 col-xl-2">
+                                <FilmItem
+                                    title={movie.Title}
+                                    imageUrl={movie.Poster}
+                                    year={movie.Year}
+                                    type={movie.Type} />
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }

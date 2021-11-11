@@ -5,6 +5,7 @@ const Home = () => {
 
     const movieService = new MovieService();
     useEffect(() => {
+        
     }, [])
 
     const loadData = () => {

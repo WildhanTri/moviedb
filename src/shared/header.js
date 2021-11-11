@@ -2,6 +2,7 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import logoPath from '../assets/horizontal-logo.svg';
 
 const Header = (props) => {
@@ -30,7 +31,9 @@ const Header = (props) => {
       <div className="w-100">
         <div className="row">
           <div className="col-sm-3 col-md-2 col-lg-1 text-center my-2">
-            <img src={logoPath} style={style.logo} alt={"logo"} />
+            <Link to="/">
+              <img src={logoPath} style={style.logo} alt={"logo"} />
+            </Link>
           </div>
           <div className="col-sm-9 col-md-10 col-lg-11 text-center my-2">
             <div class="input-group" style={{ maxWidth: 512, margin: 'auto' }}>

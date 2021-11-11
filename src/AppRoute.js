@@ -22,14 +22,14 @@ const AppRoute = () => {
             <Route exact path="/"
               render={() => {
                 return (
-                  <Redirect to="/home" />
+                  <Redirect to="/movie" />
                 )
               }}
             />
-            <Route exact path="/home">
+            <Route exact path="/movie">
               <Home />
             </Route>
-            <Route exact path="/home/:imdbID">
+            <Route exact path="/movie/:imdbID">
               <Detail />
             </Route>
           </Switch>

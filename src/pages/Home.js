@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import MovieService from "../services/MovieService";
 import FilmItem from "../components/FilmItem";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -27,11 +28,13 @@ const Home = () => {
                     movies.map((movie, index) => {
                         return (
                             <div className="col-6 col-md-4 col-lg-3 col-xl-2">
-                                <FilmItem
-                                    title={movie.Title}
-                                    imageUrl={movie.Poster}
-                                    year={movie.Year}
-                                    type={movie.Type} />
+                                <Link to={`/movie/${movie.imdbID}`}>
+                                    <FilmItem
+                                        title={movie.Title}
+                                        imageUrl={movie.Poster}
+                                        year={movie.Year}
+                                        type={movie.Type} />
+                                </Link>
                             </div>
                         )
                     })

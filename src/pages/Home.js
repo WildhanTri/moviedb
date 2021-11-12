@@ -17,10 +17,15 @@ const Home = () => {
   const [totalResult, setTotalResult] = React.useState(0)
   const [warning, setWarning] = React.useState("Enter the movie keyword first");
   const [isLoadingMovie, setIsLoadingMovie] = React.useState(false)
+  const [endOfList, setEndOfList] = React.useState(false)
 
   const page = useSelector(state => state.reducer.searchPage)
 
   useEffect(() => {
+    if (page === 1) {
+      setEndOfList(false)
+    }
+
     if (query.get("q") == null || query.get("q") === "") {
       setWarning("Enter the movie keyword first")
     } else {
@@ -29,41 +34,46 @@ const Home = () => {
     }
   }, [query.get("q"), page])
 
+  useEffect(() => {
+    if (isLoadingMovie) {
+      dispatch({
+        type: SET_SEARCH_PAGE,
+        payload: page + 1
+      })
+    }
+  }, [isLoadingMovie])
+
   window.onscroll = () => {
-    console.log(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight)
-    console.log(window.innerHeight + document.documentElement.scrollTop)
-    console.log(document.documentElement.offsetHeight)
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
       if (!isLoadingMovie) {
-        dispatch({
-          type: SET_SEARCH_PAGE,
-          payload: page + 1
-        })
-        loadData(query.get("q"))
+        setIsLoadingMovie(true)
       }
     }
   }
 
 
   const loadData = (query) => {
-    setIsLoadingMovie(true)
-    movieService.getMovies(query, null, null, page)
-      .then((resolve) => {
-        console.log(page)
-        console.log(resolve.Search)
-        setIsLoadingMovie(false)
-        if (page > 1) {
-          setMovies([...movies, ...resolve.Search]);
-        } else {
-          setMovies(resolve.Search);
-        }
-        setTotalResult(resolve.totalResults)
-
-      })
-      .catch((error) => {
-        setWarning(error)
-        setIsLoadingMovie(false)
-      })
+    if (!endOfList) {
+      movieService.getMovies(query, null, null, page)
+        .then((resolve) => {
+          setIsLoadingMovie(false)
+          console.log(resolve)
+          if (resolve.Response === "True") {
+            if (page > 1) {
+              setMovies([...movies, ...resolve.Search]);
+            } else {
+              setMovies(resolve.Search);
+            }
+            setTotalResult(resolve.totalResults)
+          } else {
+            setEndOfList(true)
+          }
+        })
+        .catch((error) => {
+          setWarning(error)
+          setIsLoadingMovie(false)
+        })
+    }
   }
 
   return (

@@ -8,7 +8,8 @@ import { useDebouncedCallback } from "use-debounce/lib";
 import logoPath from '../assets/horizontal-logo.svg';
 import SearchItem from "../components/SearchItem";
 import MovieService from "../services/MovieService";
-import { SET_SEARCH_HEADER, SET_SEARCH_RESULT } from "../stores/actions";
+import { SET_SEARCH_HEADER, SET_SEARCH_PAGE, SET_SEARCH_RESULT } from "../stores/actions";
+import { windowScrollToTop } from "../utils/util";
 
 const Header = (props) => {
 
@@ -67,6 +68,12 @@ const Header = (props) => {
 
   const onClickSearch = () => {
     changeSearchResult([])
+    windowScrollToTop()
+    // RESET PAGE
+    dispatch({
+      type: SET_SEARCH_PAGE,
+      payload: 1
+    })
     history.push(`/movie?q=${searchInput}`)
   }
 

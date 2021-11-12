@@ -20,12 +20,14 @@ const Home = () => {
   const movieService = new MovieService();
 
   const [movies, setMovies] = React.useState([]);
+  const [totalResult, setTotalResult] = React.useState(0)
   const [warning, setWarning] = React.useState("Enter the movie keyword first");
 
   const loadData = (query) => {
     movieService.getMovies(query, null, null, null)
       .then((resolve) => {
         setMovies(resolve.Search);
+        setTotalResult(resolve.totalResults)
       })
       .catch((error) => {
         setWarning(error)
@@ -37,6 +39,13 @@ const Home = () => {
       <p style={{ color: 'white', textAlign: 'center' }}>
         {warning}
       </p>
+
+      {
+        query.get("q") != null && query.get("q") != "" &&
+        <p style={{ color: 'white', }}>
+          Hasil pencarian "<b>{query.get("q")}</b>" • Total result {totalResult == null ? 0 : totalResult}
+        </p>
+      }
       <div className="row">
         {
           warning === "" && movies != null && movies.map((movie, index) => {

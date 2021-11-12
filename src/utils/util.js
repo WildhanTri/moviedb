@@ -1,3 +1,6 @@
+import React from "react";
+import { useLocation } from "react-router-dom";
+
 export function convertUtcDateToYYYYMMDDHHMM(utcDate) {
     var date = new Date(utcDate);
     var year = date.getFullYear();
@@ -10,4 +13,9 @@ export function convertUtcDateToYYYYMMDDHHMM(utcDate) {
 
 export function windowScrollToTop() {
     window.scrollTo(0, 0);
+}
+
+export function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
 }

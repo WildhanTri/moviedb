@@ -1,9 +1,10 @@
 
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDebouncedCallback } from "use-debounce/lib";
 import logoPath from '../assets/horizontal-logo.svg';
 import SearchItem from "../components/SearchItem";
 import MovieService from "../services/MovieService";
@@ -12,13 +13,15 @@ import { SET_SEARCH_HEADER, SET_SEARCH_RESULT } from "../stores/actions";
 const Header = (props) => {
 
   const dispatch = useDispatch()
+  const history = useHistory();
 
   const movieService = new MovieService();
+
   var searchInput = useSelector(state => state.reducer.searchInputHeader)
   var searchMoviesResult = useSelector(state => state.reducer.searchMoviesResult)
+  const [isSearching, setIsSearching] = useState(false)
 
   useEffect(() => {
-    console.log(searchInput)
     if (searchInput === "") {
       changeSearchResult([])
     } else {
@@ -27,10 +30,11 @@ const Header = (props) => {
   }, [searchInput])
 
   const loadData = () => {
-    console.log(searchInput)
+    setIsSearching(true)
     movieService.getMovies(searchInput, null, null, null)
       .then((resolve) => {
         changeSearchResult(resolve.Search)
+        setIsSearching(false)
       })
       .catch((error) => {
 
@@ -48,7 +52,6 @@ const Header = (props) => {
   }
 
   const changeSearchInput = (value) => {
-    console.log(value)
     dispatch({
       type: SET_SEARCH_HEADER,
       payload: value
@@ -56,11 +59,15 @@ const Header = (props) => {
   }
 
   const changeSearchResult = (value) => {
-    console.log(value)
     dispatch({
       type: SET_SEARCH_RESULT,
       payload: value
     })
+  }
+
+  const onClickSearch = () => {
+    changeSearchResult([])
+    history.push(`/movie?q=${searchInput}`)
   }
 
   return (
@@ -74,29 +81,48 @@ const Header = (props) => {
           </div>
           <div className="col-sm-9 col-md-10 col-lg-11 text-center my-2">
             <div className="position-relative" style={{ maxWidth: 512, margin: 'auto' }}>
-              <div class="input-group w-100">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" id="searchInput"
-                  onChange={newFields => {
-                    inputOnchangeHandler(newFields)
-                  }} />
-                <button class="btn btn-primary" type="button" id="button-addon2">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              </div>
-
+              <form onSubmit={(e) => { e.preventDefault(); onClickSearch() }}>
+                <div class="input-group w-100">
+                  <input type="text" class="form-control" placeholder="Search" aria-label="Search" id="searchInput" autoComplete="off"
+                    onChange={newFields => {
+                      inputOnchangeHandler(newFields)
+                    }} />
+                  <button type="submit" class="btn btn-primary" id="button-addon2">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
+              </form>
               {
                 searchMoviesResult != null && searchMoviesResult.length > 0 &&
 
-                <div className="position-absolute w-100" style={{ overflow: 'auto', height: 456, padding: '8px 0px', background: '#232323' }}>
-                  {
-                    searchMoviesResult != null && searchMoviesResult.map((movie, index) => {
-                      return (
-                        <Link to={`/movie/${movie.imdbID}`} forceRefresh={true} key={index} style={{ textDecoration: 'none' }}>
-                          <SearchItem title={movie.Title} type={movie.Type} year={movie.Year} imageUrl={movie.Poster} />
-                        </Link>
-                      )
-                    })
-                  }
+                <div className="position-absolute w-100">
+                  <div style={{ overflow: 'auto', maxHeight: 456, padding: '8px 0px', background: '#232323' }}>
+                    {
+                      isSearching &&
+                      <div className="w-100 h-100 d-flex align-items-start justify-content-center pt-5 pb-5">
+                        <div className="spinner-border text-primary" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    }
+                    {
+                      searchMoviesResult != null && searchMoviesResult.map((movie, index) => {
+                        return (
+                          <Link to={`/movie/${movie.imdbID}`} key={index} style={{ textDecoration: 'none' }}>
+                            <SearchItem title={movie.Title} type={movie.Type} year={movie.Year} imageUrl={movie.Poster} />
+                          </Link>
+                        )
+                      })
+                    }
+                  </div>
+                  <div className="w-100 text-end">
+                    <button className="btn" style={{ color: 'white' }} onClick={() => {
+                      changeSearchResult([])
+                    }}>
+                      <FontAwesomeIcon icon={faTimes} />
+                      <span className="ms-2">Close</span>
+                    </button>
+                  </div>
                 </div>
               }
             </div>

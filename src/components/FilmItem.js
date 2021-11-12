@@ -1,6 +1,29 @@
 
 import React, { useEffect, useState } from "react";
 
+const heightCard = () => {
+    // Extra large Window
+    if (window.innerWidth >= 1200) {
+        return 512;
+        
+    // large Window
+    } else if (window.innerWidth >= 992) {
+        return 400;
+        
+    // Medium Window
+    } else if (window.innerWidth >= 768) {
+        return 300;
+        
+    // Small Window
+    } else if (window.innerWidth >= 576) {
+        return 400;
+        
+    // Extra Small Window
+    } else if (window.innerWidth < 576) {
+        return 300;
+    }
+}
+
 const FilmItem = (props) => {
     return (
         <div className="card" style={styles.card}>
@@ -19,7 +42,7 @@ const FilmItem = (props) => {
 const styles = {
     card: {
         width: "100%",
-        height: 324,
+        height: heightCard(),
         position: 'relative',
         marginBottom: 20
     },

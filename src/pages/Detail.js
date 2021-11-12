@@ -6,16 +6,19 @@ import imdbLogo from '../assets/imdb-logo.svg';
 import metacriticLogo from '../assets/metacritic-logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { SET_SEARCH_RESULT } from "../stores/actions";
 
 const Detail = (props) => {
 
   const dispatch = useDispatch()
+  const history = useHistory();
 
   let { imdbID } = useParams();
   const [movie, setMovie] = useState({});
   const [isMovieLoading, setIsMovieLoading] = useState(true);
+  var searchInput = useSelector(state => state.reducer.searchInputHeader)
 
   const [movieError, setMovieError] = useState("");
 
@@ -51,6 +54,10 @@ const Detail = (props) => {
     }
   }
 
+  const onClickBack = () => {
+    history.push(`/movie?q=${searchInput}`)
+  }
+
   return (
     <div>
       <div style={styles.container}>
@@ -62,22 +69,19 @@ const Detail = (props) => {
             </div>
           </div>
         }
-
         {
           !isMovieLoading && movieError === "" &&
           <div>
             <div className="row">
               <div className="col-sm-4 text-center">
-                <img src={movie.Poster} alt={movie.Title} className="w-100" style={{ cursor: 'pointer' }} data-bs-toggle="modal" data-bs-target="#posterModal"></img>
+                <img src={movie.Poster} alt={movie.Title} className="w-100" style={{ cursor: 'pointer', objectFit:'cover' }} data-bs-toggle="modal" data-bs-target="#posterModal"></img>
               </div>
               <div className="col-sm-8 text-start" style={styles.movieContent}>
 
-                <Link to="/movie">
-                  <button className="btn btn-primary mb-4">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    <span className="ms-2">Back</span>
-                  </button>
-                </Link>
+                <button className="btn btn-primary mb-4" onClick={() => { onClickBack() }}>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                  <span className="ms-2">Back</span>
+                </button>
                 <div className="mb-4" style={styles.movieHeader}>
                   <div style={styles.movieTitleWrapper}>
                     <h2 style={styles.movieTitle}>{movie.Title}</h2>
@@ -169,7 +173,7 @@ const Detail = (props) => {
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div className="modal-body">
-                    <img src={movie.Poster} alt={movie.Title} className="w-100"></img>
+                    <img src={movie.Poster} alt={movie.Title} className="w-100" style={{objectFit:'cover'}}></img>
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

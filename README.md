@@ -15,5 +15,11 @@ Create an .env variable in your root directory. Then enter these 2 variables
 - REACT_APP_OMDBAPI_API_ENDPOINT=http://www.omdbapi.com/
 - REACT_APP_OMDBAPI_API_TOKEN={your http://www.omdbapi.com token}
 
+How to run this project locally :
+1. Clone this repo
+2. run "npm install"
+3. after finished, then run "npm start"
+4. Open in browser, go to http://localhost:3000
+
 Demos:
 https://triherlian-moviedb-app.herokuapp.com/
